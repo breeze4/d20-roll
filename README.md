@@ -1,6 +1,6 @@
 # d20
 
-FIXME
+Implementation for https://finding-clojure.ghost.io/tag/d20-roll/
 
 ## Prerequisites
 
