@@ -28,7 +28,6 @@
 
 (defn db-connection [] @pooled-db)
 
-; sets up database
 (defn drop-table []
   (println "dropping table")
   (sql/db-do-commands (db-connection)
