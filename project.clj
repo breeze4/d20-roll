@@ -11,7 +11,7 @@
                  [cheshire "5.4.0"]]
   :plugins [[lein-ring "0.8.13"]
             [com.jakemccrary/lein-test-refresh "0.5.2"]]
-  :ring {:handler d20.core.handler/app}
+  :ring {:handler d20.core.roll-handler/app}
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
                         [ring-mock "0.1.5"]]}})
