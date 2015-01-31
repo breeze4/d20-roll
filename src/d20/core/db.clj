@@ -3,10 +3,17 @@
   (:require [cheshire.core :refer :all]
             [clojure.java.jdbc :as sql]))
 
-(def db-spec
+(def db-spec-mem
   {:classname "org.h2.Driver"
    :subprotocol "h2"
    :subname "mem:rolls"
+   :user ""
+   :password ""})
+
+(def db-spec-file
+  {:classname "org.h2.Driver"
+   :subprotocol "h2"
+   :subname "~/rolls;AUTO_SERVER=TRUE"
    :user ""
    :password ""})
 
@@ -24,7 +31,7 @@
                (.setInitialPoolSize 1))]
     {:datasource cpds}))
 
-(def pooled-db (delay (pool db-spec)))
+(def pooled-db (delay (pool db-spec-file)))
 
 (defn db-connection [] @pooled-db)
 
@@ -40,6 +47,11 @@
                                             [:id "varchar(256)" "primary key"]
                                             [:denomination :int]
                                             [:number :int])))
+;ghetto CREATE IF NOT EXISTS
+(defn initialize-db []
+  (try (drop-table)
+    (catch Exception e (str "database didnt exist"))
+    (finally (create-table))))
 
 (defn get-all-rolls []
   (println "getting all rolls..")

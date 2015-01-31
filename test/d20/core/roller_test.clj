@@ -1,7 +1,6 @@
-(ns d20.core.roll-handler-test
+(ns d20.core.roller-test
   (:require [clojure.test :refer :all]
-            [ring.mock.request :as mock]
-            [d20.core.roll-handler :refer :all]))
+            [d20.core.roller :refer :all]))
 
 (deftest test-random-number-generator
   (testing "random number generator is sort of very difficult"
@@ -22,13 +21,12 @@
     (is (= false (valid-roll? 0)))
     (is (= false (valid-roll? nil)))))
 
-(deftest test-roll-200
-  (testing "get single roll with denomination"
-    (let [response (app (mock/request :get "/roll/6"))]
-      (is (= (:status response) 200)))))
-
-(deftest test-roll-400
-  (testing "get single roll with invalid denomination"
-    (let [response (app (mock/request :get "/roll/5"))]
-      (is (= (:status response) 400))
-      (is (= (:body response) "Invalid input, must be a number corresponding to a valid dice roll")))))
+(deftest test-roller
+  (testing "single rolls"
+    (let [roll (do-roll 6)]
+     (is (= 2 (count roll))) ;2 entries in roll
+     (is (<= (parse-int (:number roll)) (parse-int (:denomination roll))))
+     (is (>= 1 (parse-int (:number roll))))))
+  (testing "multiple rolls"
+    (let [rolls (do-multi-roll 6 4)]
+     (is (= 4 (count rolls)))))) ;4 separate rolls
