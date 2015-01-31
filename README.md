@@ -1,6 +1,10 @@
 # d20
 
-Implementation for https://finding-clojure.ghost.io/tag/d20-roll/
+Implementation for http://breeze.ghost.io/d20-roller-microservice/
+
+A dice rolling microservice. Use a GET request to get various legal D&D dice rolls.
+
+`hostname:3000/roll/:denomination/num/:number` returns `:number` of rolls of a dice with number of sides given by `:denomination`
 
 ## Prerequisites
 
